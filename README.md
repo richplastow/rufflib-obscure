@@ -14,12 +14,12 @@ __A RuffLIB library for roughly encrypting and decrypting strings.__
 ```js
 import Obscure from 'rufflib-obscure';
 
-const foo = new Obscure('Salt in here');
+const obscure = new Obscure('Salt in here');
 
 const original = "Some 'printable' ASCII.";
 const password = 'My-password';
-const encrypted = foo.encrypt(original, password);
-const decrypted = foo.decrypt(encrypted, password);
+const encrypted = obscure.encrypt(original, password);
+const decrypted = obscure.decrypt(encrypted, password);
 
 console.log(original); // Some 'printable' ASCII.
 console.log(encrypted); // ABC...xyz @TODO replace with real string

@@ -1,0 +1,22 @@
+{
+    "name": "rufflib-obscure",
+    "version": "0.0.1",
+    "description": "A RuffLIB library for roughly encrypting and decrypting strings.",
+    "main": "main.js",
+    "type": "module",
+    "scripts": {
+        "test:src": "node src/docs/test/run-nodejs-tests.js # test src/ using NodeJS",
+        "test": "[ -z $npm_config_src ]&&D=dist||D=src;npm run test:$D"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/richplastow/rufflib-obscure.git"
+    },
+    "author": "rich@richplastow.com",
+    "license": "MIT",
+    "homepage": "https://richplastow.com/rufflib-obscure",
+    "devDependencies": {
+        "rufflib-expect": "^3.0.0",
+        "rufflib-validate": "^2.0.0"
+    }
+}

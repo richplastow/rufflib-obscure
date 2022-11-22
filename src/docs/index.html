@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height,
+        initial-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="img/icon/apple-touch-icon.png">
+    <link rel="icon" type="image/gif" sizes="32x32" href="img/icon/favicon-32x32.gif">
+    <link rel="icon" type="image/gif" sizes="16x16" href="img/icon/favicon-16x16.gif">
+    <link rel="icon" type="image/gif" sizes="192x192" href="img/icon/favicon-192x192.gif">
+    <link rel="shortcut icon" href="img/icon/favicon.ico">
+    <meta name="apple-mobile-web-app-title" content="RuffLIB Obscure">
+    <meta name="application-name" content="RuffLIB Obscure">
+    <meta name="theme-color" content="#000000">
+    <title>RuffLIB Obscure</title>
+    <style>
+        body{margin:0;color:#eee;font:10px/2 Verdana,Arial;text-align:center}
+        @media screen and (min-width:450px){body{font-size:15px}}
+        body{padding:9px;min-width:282px;background:#000}
+        nav{position:absolute;left:16px;top:12px;font-weight:bold}
+        h1{margin:-30px 0 40px 0;color:#fff}
+        h2{position:relative;margin:0;white-space:nowrap}
+        a{color:#27c0e7;text-decoration:none;transition:color 0.3s}
+        a:hover{color:#0ff}
+        .btn{padding:4px 9px;background:#fff}
+        .btn{border-right:8px solid #f00;border-left:8px solid #0ff}
+        img{width:256px;height:256px}
+        section{margin:40px 0}
+        section h3{margin:9px 0;padding:7px;color:rgb(173, 43, 238);font-family:Verdana,Arial}
+        pre{width:300px;margin:0 auto;text-align:left}
+        code{font-size:9px;}
+        @media screen and (min-width:450px){
+            section h4,pre{width:450px}code{font-size:13px}
+        }
+    </style>
+</head>
+<body>
+    <nav><a class="btn" href="/rufflib">Home</a></nav>
+    <p>C O M I N G &nbsp; S O O N</p>
+    <img src="img/icon/rufflib-v1-256x256.gif" alt="RuffLIB Logo">
+    <h1>O B S C U R E</h1>
+    <h3>
+        A RuffLIB library for roughly
+        <br>
+        encrypting and decrypting strings.
+    </h3>
+    <br>
+    <aside>
+        <b>Version:</b> 0.0.1<br>
+        <b>Repo:</b> <a href="https://github.com/richplastow/rufflib-obscure">https://github.com/richplastow/rufflib-obscure</a><br>
+        <b>Homepage:</b> <a href="https://richplastow.com/rufflib-obscure">https://richplastow.com/rufflib-obscure</a><br>
+        <b>Tests:</b> <a href="test/run-browser-tests.html">test/run-browser-tests.html</a><br>
+        <b>Demo 1:</b> <a href="demo/demo-1.html">demo/demo-1.html</a><br>
+    </aside>
+
+    <!-- from https://codebeautify.org/code-highlighter set to Atelier Seaside Dark -->
+    <section style="background-color:rgb(0, 0, 0);background:rgb(0, 0, 0);">
+
+<pre><h3>Typical usage:</h3><code id="htmlViewer" style="color:rgb(140, 166, 140); font-weight:400;background-color:rgb(19, 21, 19);background:rgb(19, 21, 19);display:block;padding: .5em;">import Obscure <span style="color:rgb(173, 43, 238); font-weight:400;background:rgba(0, 0, 0, 0);">from</span> <span style="color:rgb(41, 163, 41); font-weight:400;background:rgba(0, 0, 0, 0);">&#x27;rufflib-obscure&#x27;</span>;
+
+const obscure <span style="color:rgb(140, 166, 140); font-weight:400;background:rgba(0, 0, 0, 0);">=</span> <span style="color:rgb(173, 43, 238); font-weight:400;background:rgba(0, 0, 0, 0);">new</span> Obscure(<span style="color:rgb(41, 163, 41); font-weight:400;background:rgba(0, 0, 0, 0);">&#x27;Salt in here&#x27;</span>);
+
+const original <span style="color:rgb(140, 166, 140); font-weight:400;background:rgba(0, 0, 0, 0);">=</span> <span style="color:rgb(41, 163, 41); font-weight:400;background:rgba(0, 0, 0, 0);">&quot;Some &#x27;printable&#x27; ASCII.&quot;</span>;
+const password <span style="color:rgb(140, 166, 140); font-weight:400;background:rgba(0, 0, 0, 0);">=</span> <span style="color:rgb(41, 163, 41); font-weight:400;background:rgba(0, 0, 0, 0);">&#x27;My-password&#x27;</span>;
+const encrypted <span style="color:rgb(140, 166, 140); font-weight:400;background:rgba(0, 0, 0, 0);">=</span> obscure.encrypt(original, password);
+const decrypted <span style="color:rgb(140, 166, 140); font-weight:400;background:rgba(0, 0, 0, 0);">=</span> obscure.decrypt(encrypted, password);
+
+console.<span style="color:rgb(135, 113, 29); font-weight:400;background:rgba(0, 0, 0, 0);">log</span>(original); <span style="color:rgb(140, 166, 140); font-weight:400;background:rgba(0, 0, 0, 0);">/</span><span style="color:rgb(140, 166, 140); font-weight:400;background:rgba(0, 0, 0, 0);">/</span> <span style="color:rgb(173, 43, 238); font-weight:400;background:rgba(0, 0, 0, 0);">Some</span> <span style="color:rgb(41, 163, 41); font-weight:400;background:rgba(0, 0, 0, 0);">&#x27;printable&#x27;</span> ASCII.
+console.<span style="color:rgb(135, 113, 29); font-weight:400;background:rgba(0, 0, 0, 0);">log</span>(encrypted); <span style="color:rgb(140, 166, 140); font-weight:400;background:rgba(0, 0, 0, 0);">/</span><span style="color:rgb(140, 166, 140); font-weight:400;background:rgba(0, 0, 0, 0);">/</span> ABC...xyz <span style="color:rgb(230, 25, 60); font-weight:400;background:rgba(0, 0, 0, 0);">@TODO</span> replace <span style="color:rgb(173, 43, 238); font-weight:400;background:rgba(0, 0, 0, 0);">with</span> <span style="color:rgb(135, 113, 29); font-weight:400;background:rgba(0, 0, 0, 0);">real</span> string
+console.<span style="color:rgb(135, 113, 29); font-weight:400;background:rgba(0, 0, 0, 0);">log</span>(decrypted); <span style="color:rgb(140, 166, 140); font-weight:400;background:rgba(0, 0, 0, 0);">/</span><span style="color:rgb(140, 166, 140); font-weight:400;background:rgba(0, 0, 0, 0);">/</span> <span style="color:rgb(173, 43, 238); font-weight:400;background:rgba(0, 0, 0, 0);">Some</span> <span style="color:rgb(41, 163, 41); font-weight:400;background:rgba(0, 0, 0, 0);">&#x27;printable&#x27;</span> ASCII.
+</pre></section><br>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<script>window.RUFFLIB_ENV='public'</script>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height,
+        initial-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="../img/icon/apple-touch-icon.png">
+    <link rel="icon" type="image/gif" sizes="32x32" href="../img/icon/favicon-32x32.gif">
+    <link rel="icon" type="image/gif" sizes="16x16" href="../img/icon/favicon-16x16.gif">
+    <link rel="icon" type="image/gif" sizes="192x192" href="../img/icon/favicon-192x192.gif">
+    <link rel="shortcut icon" href="../img/icon/favicon.ico">
+    <meta name="apple-mobile-web-app-title" content="RuffLIB Obscure | Demo 1">
+    <meta name="application-name" content="RuffLIB Obscure | Demo 1">
+    <meta name="theme-color" content="#000000">
+    <title>RuffLIB Obscure | Tests</title>
+    <style>
+        body{color:#eee;font:10px/2 Verdana,Arial;text-align:center}
+        @media screen and (min-width:450px){body{font-size:15px}}
+        body{padding:9px;min-width:282px;background:#000}
+        pre,a{padding:4px 8px;border-radius:4px;text-decoration:none}
+        pre{margin:9px;text-align:left}
+        #err{padding:0 8px;background:#491f31;color:#fbb}
+    </style>
+</head>
+<body>
+    <pre id="err"></pre><script>window.onerror=function(m,s,l,c){if(-1==m.indexOf(
+    'start with “./”'))document.getElementById('err').innerHTML+=m+'\n    '+s
+    +':'+l+':'+c+'\n'} // Firefox has a spurious 'start with “./”' error</script>
+
+    <!-- <BODY class="rufflib-env-public"> or <BODY class="rufflib-env-source"> -->
+    <script>document.body.classList.add('rufflib-env-'+window.RUFFLIB_ENV)</script>
+
+    <!-- If RUFFLIB_ENV is 'public', let the user choose legacy or modern JS. -->
+    <div><span id="rufflib-source-label">Source</span><select id="rufflib-js-format">
+        <option value="legacy">Legacy</option>
+        <option value="modern">Modern</option>
+    </select></div><script>!function(d){var $s=d.getElementById('rufflib-js-format')
+    $s.value=localStorage.getItem('rufflib-js-format')||'legacy';$s.addEventListener
+    ('change',function(){localStorage.setItem('rufflib-js-format',$s.value)
+    location.reload()})}(document)</script><style>
+    #rufflib-source-label,body.rufflib-env-source #rufflib-js-format{display:none}
+    body.rufflib-env-source #rufflib-source-label{display:inline}</style>
+
+    <nav><a class="btn" href="../index.html">RuffLIB Obscure</a></nav>
+    <h2>RuffLIB Obscure | Tests</h2>
+    <div id="test-output">Loading...</div>
+
+    <script>!function(d){
+
+        // Use production code or development code, depending on the environment.
+        // If production code, let the user choose between legacy and modern code. 
+        if (window.RUFFLIB_ENV === 'source') {
+            genSourceModernScripts();
+        } else {
+            document.getElementById('rufflib-js-format').value === 'legacy'
+                ? genPublicLegacyScripts() : genPublicModernScripts() ;
+        }
+
+        // Generates a <SCRIPT> element, and appends it to the <BODY>.
+        function genScript(o) { // options
+            var $s = d.createElement('script');
+            if (o.async) $s.setAttribute('async', 'async');
+            if (o.src)   $s.setAttribute('src', o.src);
+            if (o.type)  $s.setAttribute('type', o.type);
+            if (o.code)  $s.innerHTML = o.code.join('\n');
+            d.body.appendChild($s);
+        }
+
+        // Generates four scripts designed to run in the public folder.
+        // This is production code, which may need to run in legacy browsers.
+        function genPublicLegacyScripts() {
+
+            // <script src="../dist/rufflib-obscure.umd.es5.min.js" />
+            genScript({ src:'../dist/rufflib-obscure.umd.es5.min.js' });
+
+            // <script src="rufflib-expect.umd.es5.min.js" />
+            genScript({ src:'rufflib-expect.umd.es5.min.js' });
+
+            // <script src="rufflib-obscure-test.umd.js" />
+            genScript({ src:'rufflib-obscure-test.umd.js' });
+
+            // <script>!function(){ var clear = setInterval(function() { ...
+            genScript({ code:[
+                "!function(){",
+                "    var clear = setInterval(function() {",
+                "        if (window.rufflib && rufflib.expect && rufflib.expect.main && rufflib.obscure && rufflib.obscure.main && rufflib.obscure.test) {",
+                "            clearInterval(clear);",
+                "            init();",
+                "        }",
+                "    }, 10);",
+                "    function init(){"]
+                .concat(
+                    getLegacyTestRunnerCode('Obscure Test Suite (dist, legacy browser)'),
+                    "    }",
+                    "}()"
+                )
+            });
+
+        }
+
+        // Generates three scripts designed to run in the public folder.
+        // This is production code, and assumes a modern browser.
+        function genPublicModernScripts() {
+
+            // <script async src="../shims/es-module-shims.js" />
+            genScript({ async:true, src:'../shims/es-module-shims.js' });
+
+            // <script type="importmap">{ "imports": { ...
+            genScript({ type:'importmap', code:[
+                '{',
+                '    "imports": {',
+                '        "Expect": "./rufflib-expect.es.js",',
+                '        "Obscure": "../dist/rufflib-obscure.es.js",',
+                '        "obscureTest": "./rufflib-obscure-test.es.js"',
+                '    }',
+                '}',
+            ]});
+
+            // <script type="module"> import Expect from 'Expect'; ...
+            genScript({ type:'module', code:getModernTestRunnerCode(
+                'Obscure Test Suite (dist, modern browser)')});
+
+        }
+
+        // Generates three scripts designed to run in the source folder.
+        // This is only used during development, and assumes a modern browser.
+        function genSourceModernScripts() {
+
+            // <script async src="../shims/es-module-shims.js" />
+            genScript({ async:true, src:'../shims/es-module-shims.js' });
+
+            // <script type="importmap">{ "imports": { ...
+            genScript({ type:'importmap', code:[
+                '{',
+                '    "imports": {',
+                '        "Expect": "./__rufflib-expect-dist__/rufflib-expect.es.js",',
+                '        "Obscure": "../__src__/main.js",',
+                '        "obscureTest": "../__src__/main-test.js",',
+                '        "rufflib-validate": "./__rufflib-validate-dist__/rufflib-validate.es.js"',
+                '    }',
+                '}',
+            ]});
+
+            // <script type="module"> import Expect from 'Expect'; ...
+            genScript({ type:'module', code:getModernTestRunnerCode(
+                'Obscure Test Suite (src, modern browser)')});
+
+        }
+
+        // Code which legacy browsers use to run the test suite.
+        function getLegacyTestRunnerCode(suiteTitle) {
+            return [
+                "        var Expect = rufflib.expect.main;",
+                "        var Obscure = rufflib.obscure.main;",
+                "        var obscureTest = rufflib.obscure.test;",
+                "",
+                "        // Generate the <STYLE> element.",
+                "        var $css = document.createElement('style');",
+                "        $css.innerHTML = Expect.generateCss('body', '#test-output');",
+                "        document.head.appendChild($css);",
+                "",
+                "        // Run the test suite.",
+                `        var expect = new Expect('${suiteTitle}');`,
+                "        obscureTest(expect, Obscure);",
+                "",
+                "        // Display the results.",
+                "        document.body.classList.add(expect.status);",
+                "        document.querySelector('#test-output').innerHTML =",
+                "            expect.render('Html', '', true);",
+            ];
+        }
+
+        // Code which modern browsers use to run the test suite.
+        function getModernTestRunnerCode(suiteTitle) {
+            return [
+                "import Expect from 'Expect';",
+                "import Obscure from 'Obscure';",
+                "import obscureTest from 'obscureTest';",
+                "",
+                "// Generate the <STYLE> element.",
+                "const $css = document.createElement('style');",
+                "$css.innerHTML = Expect.generateCss('body', '#test-output');",
+                "document.head.appendChild($css);",
+                "",
+                "// Run the test suite.",
+                `const expect = new Expect('${suiteTitle}');`,
+                "obscureTest(expect, Obscure);",
+                "",
+                "// Display the results.",
+                "document.body.classList.add(expect.status);",
+                "document.querySelector('#test-output').innerHTML =",
+                "    expect.render('Html', '', true);",
+            ];
+        }
+
+    }(document)</script>
+
+</body>
+</html>
