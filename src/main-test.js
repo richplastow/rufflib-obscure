@@ -5,10 +5,11 @@
 // Also used for building Obscure’s unit test distribution files.
 
 import { testObscureBasics } from './obscure.js';
+import { testDemo1 } from './docs/demo/demo-1.js';
 
 // Run each test. You can comment-out some during development, to help focus on
 // individual tests. But make sure all tests are uncommented before committing.
 export default function obscureTest(expect, Obscure) {
     testObscureBasics(expect, Obscure);
-
+    testDemo1(expect, Obscure);
 }

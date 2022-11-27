@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<script>window.RUFFLIB_ENV='public'</script>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height,
+        initial-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="../img/icon/apple-touch-icon.png">
+    <link rel="icon" type="image/gif" sizes="32x32" href="../img/icon/favicon-32x32.gif">
+    <link rel="icon" type="image/gif" sizes="16x16" href="../img/icon/favicon-16x16.gif">
+    <link rel="icon" type="image/gif" sizes="192x192" href="../img/icon/favicon-192x192.gif">
+    <link rel="shortcut icon" href="../img/icon/favicon.ico">
+    <meta name="apple-mobile-web-app-title" content="RuffLIB Obscure | Demo 1">
+    <meta name="application-name" content="RuffLIB Obscure | Demo 1">
+    <meta name="theme-color" content="#000000">
+    <title>RuffLIB Obscure | Demo 1</title>
+    <style>
+        body,a{margin:0;color:#dbffd7;font:14px/2 Arial;text-align:center}
+        body{background:#27514f}
+        h2{position:relative;margin:0;white-space:nowrap}
+        pre,a{padding:4px 8px;border-radius:4px;text-decoration:none}
+        pre{margin:9px;text-align:left}
+        #err{padding:0 8px;background:#491f31;color:#fbb}
+        #log{background:#22342f}
+    </style>
+</head>
+<body>
+    <pre id="err"></pre><script>window.onerror=function(m,s,l,c){if(-1==m.indexOf(
+    'start with “./”'))document.getElementById('err').innerHTML+=m+'\n    '+s
+    +':'+l+':'+c+'\n'} // Firefox has a spurious 'start with “./”' error</script>
+
+    <!-- <BODY class="rufflib-env-public"> or <BODY class="rufflib-env-source"> -->
+    <script>document.body.classList.add('rufflib-env-'+window.RUFFLIB_ENV)</script>
+
+    <!-- If RUFFLIB_ENV is 'public', let the user choose legacy or modern JS. -->
+    <div><span id="rufflib-source-label">Source</span><select id="rufflib-js-format">
+        <option value="legacy">Legacy</option>
+        <option value="modern">Modern</option>
+    </select></div><script>!function(d){var $s=d.getElementById('rufflib-js-format')
+    $s.value=localStorage.getItem('rufflib-js-format')||'legacy';$s.addEventListener
+    ('change',function(){localStorage.setItem('rufflib-js-format',$s.value)
+    location.reload()})}(document)</script><style>
+    #rufflib-source-label,body.rufflib-env-source #rufflib-js-format{display:none}
+    body.rufflib-env-source #rufflib-source-label{display:inline}</style>
+
+    <h2>RuffLIB Obscure | Demo 1</h2>
+
+    <style>
+        /* Normalise the styling of the Obscure sidebar and its content. */
+        .rl_f-sidebar{text-align:left}
+        .rl_f-sidebar *{user-select:none;-webkit-user-select:none;cursor:default}
+        .rl_f-sidebar,.rl_f-form,.rl_f-fieldset,.rl_f-row{margin:0;padding:0}
+        .rl_f-fieldset{border:none}
+        /* Position the sidebar and its content. */
+        /* Note that .rl_f-form and .rl_f-fieldset height are set in code. */
+        .rl_f-sidebar{position:fixed;top:8px;right:8px;bottom:8px;width:200px}
+        .rl_f-form{padding:8px 0;margin:0 0 8px 0}
+        .rl_f-form,.rl_f-fieldset{overflow:hidden;transition:height 0.2s}
+        .rl_f-row{display:block;padding:0 8px;height:30px}
+        .rl_f-title{padding:0 8px;height:30px}
+        .rl_f-arrow{display:inline-block}
+        /* Indent fieldsets, and hide their content when minimised. */
+        .rl_f-fieldset{padding-left:8px}
+        .rl_f-fieldset.rl_f-depth-1{padding:0}
+        /* Colours. */
+        .rl_f-form{background:#111}
+        .rl_f-fieldset{background:#224}
+        .rl_f-fieldset:hover{background:#336}
+        .rl_f-row{background:#333}
+        .rl_f-row:hover{background:#666}
+        .rl_f-row.rl_f-boolean{background:#422}
+        .rl_f-row.rl_f-boolean:hover{background:#633}
+        /* Arrows and titles */
+        .rl_f-arrow{transform:rotate(90deg);transition:transform 0.2s}
+        .rl_f-fieldset.rl_f-min >.rl_f-title .rl_f-arrow{transform:rotate(0deg)}
+        .rl_f-depth-1 >.rl_f-title{font-weight:bold}
+    </style>
+
+    <aside class="rl_f-sidebar">
+        <form id="form-0" class="rl_f-form">Loading...</form>
+        <form id="form-1" class="rl_f-form">Loading...</form>
+    </aside>
+    <pre id="log">Loading...</pre>
+
+    <script>!function(d){
+
+        // Use production code or development code, depending on the environment.
+        // If production code, let the user choose between legacy and modern code. 
+        if (window.RUFFLIB_ENV === 'source') {
+            genSourceModernScripts();
+        } else {
+            document.getElementById('rufflib-js-format').value === 'legacy'
+                ? genPublicLegacyScripts() : genPublicModernScripts() ;
+        }
+
+        // Generates a <SCRIPT> element, and appends it to the <BODY>.
+        function genScript(o) { // options
+            var $s = d.createElement('script');
+            if (o.async) $s.setAttribute('async', 'async');
+            if (o.src)   $s.setAttribute('src', o.src);
+            if (o.type)  $s.setAttribute('type', o.type);
+            if (o.code)  $s.innerHTML = o.code.join('\n');
+            d.body.appendChild($s);
+        }
+
+        // Generates three scripts designed to run in the public folder.
+        // This is production code, which may need to run in legacy browsers.
+        function genPublicLegacyScripts() {
+
+            // <script src="demo-1.umd.es5.js" />
+            genScript({ src:'demo-1.umd.es5.js' });
+
+            // <script src="../dist/rufflib-obscure.umd.es5.min.js" />
+            genScript({ src:'../dist/rufflib-obscure.umd.es5.min.js' });
+
+            // <script>!function(){ var clear = setInterval(function() { ...
+            genScript({ code:[
+                "!function(){",
+                "    var clear = setInterval(function() {",
+                "        if (window.rufflib && rufflib.obscure && rufflib.obscure.main && rufflib.obscure.demo1) {",
+                "            clearInterval(clear);",
+                "            init();",
+                "        }",
+                "    }, 10);",
+                "    function init(){"]
+                .concat(
+                    getLegacyDemoRunnerCode(),
+                    "    }",
+                    "}()"
+                )
+            });
+
+        }
+
+        // Generates three scripts designed to run in the public folder.
+        // This is production code, and assumes a modern browser.
+        function genPublicModernScripts() {
+
+            // <script async src="../shims/es-module-shims.js" />
+            genScript({ async:true, src:'../shims/es-module-shims.js' });
+
+            // <script type="importmap">{ "imports": { ...
+            genScript({ type:'importmap', code:[
+                '{',
+                '    "imports": {',
+                '        "Obscure": "../dist/rufflib-obscure.es.js",',
+                '        "obscureDemo1": "./demo-1.es.js"',
+                '    }',
+                '}',
+            ]});
+
+            // <script type="module"> import Obscure from 'Obscure'; ...
+            genScript({ type:'module', code:getModernDemoRunnerCode()});
+
+        }
+
+        // Generates three scripts designed to run in the source folder.
+        // This is only used during development, and assumes a modern browser.
+        function genSourceModernScripts() {
+
+            // <script async src="../shims/es-module-shims.js" />
+            genScript({ async:true, src:'../shims/es-module-shims.js' });
+
+            // <script type="importmap">{ "imports": { ...
+            genScript({ type:'importmap', code:[
+                '{',
+                '    "imports": {',
+                '        "Obscure": "../__src__/main.js",',
+                '        "obscureDemo1": "./demo-1.js",',
+                '        "rufflib-validate": "./__rufflib-validate-dist__/rufflib-validate.es.js"',
+                '    }',
+                '}',
+            ]});
+
+            // <script type="module"> import Obscure from 'Obscure'; ...
+            genScript({ type:'module', code:getModernDemoRunnerCode()});
+
+        }
+
+        // Code which legacy browsers use to run the demo.
+        function getLegacyDemoRunnerCode() {
+            return [
+                "        var Obscure = rufflib.obscure.main;",
+                "        var obscureDemo1 = rufflib.obscure.demo1.obscureDemo1;",
+                "        obscureDemo1(",
+                "            Obscure,",
+                "            {",
+                "                $log: document.querySelector('#log'),",
+                "                $form0: document.querySelector('#form-0'),",
+                "                $form1: document.querySelector('#form-1')",
+                "            }",
+                "        );",
+            ];
+        }
+
+        // Code which modern browsers use to run the demo.
+        function getModernDemoRunnerCode() {
+            return [
+                "import Obscure from 'Obscure';",
+                "import { obscureDemo1 } from 'obscureDemo1';",
+                "obscureDemo1(",
+                "    Obscure,",
+                "    {",
+                "        $log: document.querySelector('#log'),",
+                "        $form0: document.querySelector('#form-0'),",
+                "        $form1: document.querySelector('#form-1')",
+                "    }",
+                ");",
+            ];
+        }
+
+    }(document)</script>
+
+</body>
+</html>

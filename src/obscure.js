@@ -39,7 +39,7 @@ export default class Obscure {
         const v = new Validate('new Obscure()', false);
         if (! v.string(salt, 'salt', RX_SALT)) return this.error = v.err;
 
-        // Store the `salt`` argument.
+        // Store the `salt` argument.
         this.salt = salt;
     }
 
